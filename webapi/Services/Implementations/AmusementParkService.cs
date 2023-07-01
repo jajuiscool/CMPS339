@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Microsoft.Extensions.Logging;
 using System.Data;
 using System.Data.SqlClient;
 using webapi.Models;
@@ -8,6 +9,12 @@ namespace webapi.Services.Implementations
 {
     public class AmusementParkService : IAmusementParkService
     {
+        private readonly ILogger<AmusementParkService> _logger; 
+
+        public AmusementParkService(ILogger<AmusementParkService> logger)
+        {
+            _logger = logger;
+        }
         public async Task<List<Parks>> GetAllAsync()
         {
             List<Parks> parks = new();
@@ -38,10 +45,24 @@ namespace webapi.Services.Implementations
             return parks.FirstOrDefault();
         }
 
-        public async Task<Parks?> InsertAsync(ParksCreateDto dto)
+        public async Task<ParksGetDto?> InsertAsync(ParksCreateDto dto)
         {
-            using (IDbConnection connection = new SqlConnection(ConnectionService.ConnectionString))
+            try
+            {
+                using IDbConnection connection = new SqlConnection(ConnectionService.ConnectionString);
+                connection.Open();
 
+                IEnumerable<Parks> newPark = await connection
+                    .QueryAsync<Parks>("INSERT INTO Parks VALUES (@Name)", new { Name = dto.Name });
+
+                return newPark
+                    .Select(x => new ParksGetDto { Name = dto.Name })
+                    .FirstOrDefault();
+            } catch (Exception e)
+            {
+                _logger.LogError(e, "An error has occured. DTO Value Name: {NAME} At: {TIME}", dto.Name, DateTime.Now.ToString());
+                return null;
+            }
         }
     }
 }

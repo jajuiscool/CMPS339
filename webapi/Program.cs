@@ -9,10 +9,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddMemoryCache();
 
 builder.Logging.ClearProviders();
+builder.Services.AddLogging();
 builder.Logging.AddConsole();
 builder.Services.AddControllersWithViews();
 builder.Services.AddSwaggerGen();
-builder.Services.AddLogging();
 builder.Services.AddSingleton<IAmusementParkService, AmusementParkService>();
 
 var app = builder.Build();
