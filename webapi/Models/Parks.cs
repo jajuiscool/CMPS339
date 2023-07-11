@@ -37,5 +37,4 @@ namespace webapi.Models
         public string Name { get; set; } = string.Empty;
     }
 
-
 }

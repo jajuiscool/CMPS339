@@ -32,5 +32,22 @@ namespace webapi.Controllers
             }
             return NotFound();
         }
+
+        [HttpPost]
+        public async Task<ActionResult> Create(ParksCreateDto dto)
+        {
+            if (ModelState.IsValid)
+            {
+                
+                ParksGetDto? park = await _amusementParkService.InsertAsync(dto);
+
+                if (park != null)
+                {
+                    return Ok(park);
+                }
+                return BadRequest("Unable to insert record.");
+            }
+            return BadRequest("The model is invalid");
+        }
     }
 }
