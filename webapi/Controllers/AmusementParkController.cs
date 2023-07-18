@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using webapi.Models;
+using webapi.Services.Implementations;
 using webapi.Services.Interfaces;
 
 namespace webapi.Controllers
@@ -9,6 +10,17 @@ namespace webapi.Controllers
     public class AmusementParkController : ControllerBase
     {
        private readonly IAmusementParkService _amusementParkService;
+
+        public AmusementParkController()
+        {
+
+            ILoggerFactory factory = new LoggerFactory();
+
+            ILogger<AmusementParkService> logger = new Logger<AmusementParkService>(factory);
+
+            _amusementParkService = new AmusementParkService(logger);
+
+        }
 
         public AmusementParkController(IAmusementParkService amusementParkService)
         {
