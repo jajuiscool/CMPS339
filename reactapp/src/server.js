@@ -2,7 +2,7 @@ const sql = require('mssql');
 const express = require('express');
 
 const config = {
-    server: '(localdb)\\ MSSQLLocalDB',
+    server: 'MSSQLLocalDB',
     database: 'CMPS_339_AmusementPark',
     port: 1433
 };
