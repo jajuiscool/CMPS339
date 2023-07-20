@@ -78,7 +78,7 @@ namespace webapi.Services.Implementations
             }
         }
 
-        public async Task<List<ParkAttraction>> GetByParkID(int parkId)
+        public async Task<List<ParkAttraction>> GetByParkId(int parkId)
         {
 
             using IDbConnection connection = new SqlConnection(ConnectionService.ConnectionString);
