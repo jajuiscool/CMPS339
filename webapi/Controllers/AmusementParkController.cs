@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Data;
 using webapi.Models;
 using webapi.Services.Implementations;
 using webapi.Services.Interfaces;
@@ -11,7 +12,7 @@ namespace webapi.Controllers
     {
        private readonly IAmusementParkService _amusementParkService;
 
-        public AmusementParkController()
+        /* public AmusementParkController()
         {
 
             ILoggerFactory factory = new LoggerFactory();
@@ -20,7 +21,7 @@ namespace webapi.Controllers
 
             _amusementParkService = new AmusementParkService(logger);
 
-        }
+        } */
 
         public AmusementParkController(IAmusementParkService amusementParkService)
         {
@@ -38,6 +39,7 @@ namespace webapi.Controllers
         public async Task<ActionResult> GetById(int id)
         {
             Parks? park = await _amusementParkService.GetByIdAsync(id);
+
             if (park != null)
             {
                 return Ok(park);
@@ -45,21 +47,11 @@ namespace webapi.Controllers
             return NotFound();
         }
 
-        [HttpPost]
-        public async Task<ActionResult> Create(ParksCreateDto dto)
+        [HttpGet("park-attraction/{id}")]
+        public async Task<ActionResult> GetParkAttractionByPark(int id)
         {
-            if (ModelState.IsValid)
-            {
-                
-                ParksGetDto? park = await _amusementParkService.InsertAsync(dto);
-
-                if (park != null)
-                {
-                    return Ok(park);
-                }
-                return BadRequest("Unable to insert record.");
-            }
-            return BadRequest("The model is invalid");
+            var data = await _amusementParkService.GetByParkId(id);
+            return Ok(data);
         }
     }
 }
