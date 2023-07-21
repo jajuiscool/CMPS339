@@ -13,6 +13,7 @@ builder.Services.AddLogging();
 builder.Logging.AddConsole();
 builder.Services.AddControllersWithViews();
 builder.Services.AddSwaggerGen();
+builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSingleton<IAmusementParkService, AmusementParkService>();
 
 var app = builder.Build();
@@ -27,6 +28,11 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
+
+app.UseCors(builder =>
+{
+    builder.AllowAnyOrigin();
+});
 
 if (app.Environment.IsDevelopment())
 {
