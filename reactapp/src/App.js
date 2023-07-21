@@ -22,7 +22,7 @@ function App() {
         <Header />
         <br />
         <br />
-        <p>Does dis work how about this</p>
+        {backendData.map(park =>(<li key={park.id}>{park.name}</li>))}
         <br />
         <br />
         <Footer />
