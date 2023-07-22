@@ -15,6 +15,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddSwaggerGen();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSingleton<IAmusementParkService, AmusementParkService>();
+builder.Services.AddSingleton<IAttractionsService, AttractionsService>();
 
 var app = builder.Build();
 
