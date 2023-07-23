@@ -13,6 +13,8 @@ namespace webapi.Models
 
         public Parks? Park { get; set; }
 
+        public AttractionDetails? Details { get; set; }
+
     }
 
     public class AttractionsGetDto
