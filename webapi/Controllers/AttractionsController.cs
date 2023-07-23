@@ -23,6 +23,14 @@ namespace webapi.Controllers
             return Ok(attractions);
         }
 
+        [HttpGet("details")]
+        public async Task<ActionResult> GetAllDetails()
+        {
+            List<AttractionDetails> attractions = await _attractionsService.GetAllDetailsAsync();
+            return Ok(attractions);
+        }
+
+
         [HttpGet("{id}")]
         public async Task<ActionResult> GetById(int id)
         {
