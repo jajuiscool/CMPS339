@@ -21,8 +21,6 @@ namespace webapi.Models
 
         public int ParkId { get; set; }
 
-        public ParksGetDto? Park { get; set; }
-
     }
 
     public class AttractionsCreateDto

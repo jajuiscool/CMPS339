@@ -22,7 +22,10 @@ namespace webapi.Services.Implementations
             {
                 connection.Open();
 
-                var attractionsData = await connection.QueryAsync<Attractions>("SELECT * FROM Attractions");
+                var sql = @"SELECT attr.*, park.* FROM Attractions attr INNER JOIN Parks park ON attr.ParkId = park.Id";
+
+                var attractionsData = await connection.QueryAsync<Attractions, Parks, Attractions>(sql,
+                    (x, y) => { x.Park = y; return x; });
 
                 attractions = attractionsData.ToList();
             }
@@ -61,9 +64,25 @@ namespace webapi.Services.Implementations
                     .FirstOrDefault();
             } catch (Exception e)
             {
-                _logger.LogError(e, "An error has occured. DTO Value Name: {NAME} At: {TIME}", dto.ParkId, DateTime.Now.ToString());
+                _logger.LogError(e, "An error has occured. DTO Park Id: {PARKID} At: {TIME}", dto.ParkId, DateTime.Now.ToString());
                 return null;
             }
         }
+
+        public async Task<Attractions?> DeleteByIdAsync(int id)
+        {
+            List<Attractions> attractions = new();
+            using (IDbConnection connection = new SqlConnection(ConnectionService.ConnectionString))
+            {
+                connection.Open();
+
+                var attractionsData = await connection.QueryAsync<Attractions>("DELETE FROM Attractions WHERE Id = @Id", new { Id = id });
+
+                attractions = attractionsData.ToList();
+            }
+            return attractions.FirstOrDefault();
+        }
+
+
     }
 }

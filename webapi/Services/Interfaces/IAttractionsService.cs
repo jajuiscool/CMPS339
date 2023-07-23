@@ -8,5 +8,7 @@ namespace webapi.Services.Interfaces
         Task<List<Attractions>> GetAllAsync();
         Task<Attractions?> GetByIdAsync(int id);
         Task<AttractionsGetDto?> InsertAsync(AttractionsCreateDto dto);
+
+        Task<Attractions?> DeleteByIdAsync(int id);
     }
 }

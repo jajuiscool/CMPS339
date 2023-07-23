@@ -51,5 +51,16 @@ namespace webapi.Controllers
             return BadRequest("The model is invalid");
         }
 
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteById(int id)
+        {
+            Attractions? attraction = await _attractionsService.DeleteByIdAsync(id);
+            if (attraction != null)
+            {
+                return Ok(attraction);
+            }
+            return NotFound();
+        }
+
     }
 }
