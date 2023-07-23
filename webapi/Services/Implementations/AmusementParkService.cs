@@ -31,6 +31,28 @@ namespace webapi.Services.Implementations
             return parks;
         }
 
+        public async Task<Parks?> GetParkAttractions(int id)
+        {
+            List<Parks> parks = new();
+
+            using (IDbConnection connection = new SqlConnection(ConnectionService.ConnectionString))
+            {
+                connection.Open();
+                var param = new { Id = id };
+                var sql = "SELECT prk.*, attr.*, dets.* " +
+                    "FROM Parks prk INNER JOIN Attractions attr ON attr.ParkId = prk.Id " +
+                    "INNER JOIN AttractionDetails dets ON dets.AttractionId =" +
+                    " attr.Id WHERE prk.Id = @Id";
+
+                var attractionsData = await connection.QueryAsync<Parks, Attractions, AttractionDetails, Parks>(sql,
+                    (x, y, z) => { x.Attractions = y; y.Details  = z; return x; }, param);
+
+                parks = attractionsData.ToList();
+            }
+
+            return parks.FirstOrDefault(); ;
+        }
+
         public async Task<Parks?> GetByIdAsync(int id)
         {
             List<Parks> parks = new();

@@ -22,6 +22,17 @@ namespace webapi.Controllers
             return Ok(parks);
         }
 
+        [HttpGet("park-attractions")]
+        public async Task<ActionResult> GetAttractionsById(int id)
+        {
+            Parks? park = await _amusementParkService.GetParkAttractions(id);
+            if (park != null)
+            {
+                return Ok(park);
+            }
+            return NotFound();
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult> GetById(int id)
         {

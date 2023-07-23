@@ -9,5 +9,7 @@ namespace webapi.Services.Interfaces
         Task<Parks?> GetByIdAsync(int id);
 
         Task<ParksGetDto?> InsertAsync(ParksCreateDto dto);
+        
+        Task<Parks?> GetParkAttractions(int id);
     }
 }
