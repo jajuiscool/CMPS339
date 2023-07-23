@@ -42,12 +42,17 @@ namespace webapi.Services.Implementations
                 var sql = "SELECT prk.*, attr.*, dets.* " +
                     "FROM Parks prk INNER JOIN Attractions attr ON attr.ParkId = prk.Id " +
                     "INNER JOIN AttractionDetails dets ON dets.AttractionId =" +
-                    " attr.IdWHERE prk.Id = @Id";
+                    " attr.Id WHERE prk.Id = @Id";
 
                 var attractionsData = await connection.QueryAsync<Parks, Attractions, AttractionDetails, Parks>(sql,
-                    (x, y, z) => { x.Attractions = y; y.Details = z; return x; });
+                    (x, y, z) => { x.Attractions = y; y.Details  = z; return x; }, param);
 
                 parks = attractionsData.ToList();
+
+
+              //  var parkData = await connection.QueryAsync<Parks>("SELECT * FROM Parks WHERE Id = @Id", new { Id = id });
+
+
 
                 //var parkData = await connection.QueryAsync<Parks>(
                 //  "SELECT prk.*, attr.*, dets.* " +
