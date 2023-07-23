@@ -60,5 +60,9 @@ namespace webapi.Controllers
             }
             return BadRequest("The model is invalid");
         }
+
+        [HttpPost]
+        public async Task<ActionResult> Edit(ParksUpdateDto dto)
+
     }
 }
