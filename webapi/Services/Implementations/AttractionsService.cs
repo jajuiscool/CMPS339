@@ -33,6 +33,25 @@ namespace webapi.Services.Implementations
             return attractions;
         }
 
+        public async Task<List<AttractionDetails>> GetAllDetailsAsync()
+        {
+            List<AttractionDetails> attractions = new();
+
+            using (IDbConnection connection = new SqlConnection(ConnectionService.ConnectionString))
+            {
+                connection.Open();
+
+                var sql = @"SELECT dets.*, att.* FROM AttractionDetails dets RIGHT JOIN Attractions att ON dets.AttractionId = att.Id";
+
+                var attractionsData = await connection.QueryAsync<AttractionDetails, Attractions, AttractionDetails>(sql,
+                    (x, y) => { x.Attraction = y; return x; });
+
+                attractions = attractionsData.ToList();
+            }
+
+            return attractions;
+        }
+
         public async Task<Attractions?> GetByIdAsync(int id)
         {
             List<Attractions> attractions = new();
@@ -82,6 +101,7 @@ namespace webapi.Services.Implementations
             }
             return attractions.FirstOrDefault();
         }
+
 
 
     }
