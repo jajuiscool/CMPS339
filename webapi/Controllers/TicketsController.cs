@@ -35,5 +35,31 @@ namespace webapi.Controllers
             return NotFound();
 
         }
+
+        [HttpPost]
+        public async Task<ActionResult> Create(TicketsCreateDto dto)
+        {
+            if (ModelState.IsValid)
+            {
+                TicketsGetDto? ticket = await _ticketService.InsertAsync(dto);
+                if (ticket != null)
+                {
+                    return Ok(ticket);
+                }
+                return BadRequest("Unable to insert record.");
+            }
+            return BadRequest("The model is invalid.");
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteById(int id)
+        {
+            Tickets? ticket = await _ticketService.DeleteByIdAsync(id);
+            if(ticket != null)
+            {
+                return Ok(ticket);
+            }
+            return NotFound();
+        }
     }
 }

@@ -8,8 +8,12 @@ namespace webapi.Models
     {
 
         public int Id { get; set; }
-        public int AttractionId { get; set; }
+        public Attractions? AttractionId { get; set; }
 
+        public static implicit operator Tickets?(TicketsGetDto? v)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class TicketsGetDto
