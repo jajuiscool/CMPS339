@@ -8,7 +8,7 @@ namespace webapi.Controllers
     [Route("api/amusement-parks")]
     public class AmusementParkController : ControllerBase
     {
-       private readonly IAmusementParkService _amusementParkService;
+        private readonly IAmusementParkService _amusementParkService;
 
         public AmusementParkController(IAmusementParkService amusementParkService)
         {
@@ -49,7 +49,7 @@ namespace webapi.Controllers
         {
             if (ModelState.IsValid)
             {
-                
+
                 ParksGetDto? park = await _amusementParkService.InsertAsync(dto);
 
                 if (park != null)
@@ -60,5 +60,17 @@ namespace webapi.Controllers
             }
             return BadRequest("The model is invalid");
         }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Edit(int id, string newName, ParksUpdateDto dto)
+        {
+            Parks? park = await _amusementParkService.Edit(id, newName);
+            if (park != null)
+            {
+                return Ok(park);
+            }
+            return NotFound();
+        }
+
     }
 }
