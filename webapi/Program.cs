@@ -16,7 +16,9 @@ builder.Services.AddLogging();
 builder.Logging.AddConsole();
 builder.Services.AddControllersWithViews();
 builder.Services.AddSwaggerGen();
-builder.Services.AddSingleton<IAmusementParkService, AmusementParkService>();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddScoped<IAmusementParkService, AmusementParkService>();
+builder.Services.AddScoped<IAttractionsService, AttractionsService>();
 
 var app = builder.Build();
 
@@ -31,11 +33,22 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 
+app.UseCors(builder =>
+{
+    builder.AllowAnyOrigin();
+});
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors(builder =>
+{
+    builder.AllowAnyOrigin();
+});
+
 app.UseSwaggerUI(options =>
 {
     options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
