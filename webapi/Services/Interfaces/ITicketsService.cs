@@ -11,5 +11,7 @@ namespace webapi.Services.Interfaces
         Task<Tickets?> GetTicket(int id);
         Task<TicketsGetDto?> InsertAsync(TicketsCreateDto dto);
 
+        Task<TicketsGetDto?> DeleteByIdAsync(int id);
+
     }
 }
