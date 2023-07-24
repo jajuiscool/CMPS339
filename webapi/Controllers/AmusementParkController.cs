@@ -23,6 +23,7 @@ namespace webapi.Controllers
         }
 
         [HttpGet("park-attractions")]
+        //[Route("api/amusement-parks/attractions")]
         public async Task<ActionResult> GetAttractionsById(int id)
         {
             Parks? park = await _amusementParkService.GetParkAttractions(id);
