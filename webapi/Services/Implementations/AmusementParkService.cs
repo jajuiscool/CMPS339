@@ -86,5 +86,20 @@ namespace webapi.Services.Implementations
                 return null;
             }
         }
+
+        public async Task<Parks?> Edit(int id, string newName)
+        {
+            List<Parks> parks = new();
+            using (IDbConnection connection = new SqlConnection(ConnectionService.ConnectionString))
+            {
+                connection.Open();
+
+                var parkData = await connection.QueryAsync<Parks>("UPDATE Parks SET Name = @NewName " +
+                    "WHERE Id = @Id ", new { NewName = newName, Id = id});
+
+                parks = parkData.ToList();
+            }
+            return parks.FirstOrDefault();
+        }
     }
 }

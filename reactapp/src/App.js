@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import {Link} from 'react-router-dom'
 import { Header, Footer } from './components/common'
 
 import './App.css';
@@ -20,9 +21,13 @@ function App() {
   return (
     <div className="App">
         <Header />
+
+        <div>
+        <a href="">Parks</a>
+        </div>
         <br />
         <br />
-        {backendData.map(park =>(<li key={park.id}>{park.name}</li>))}
+        {/* {backendData.map(park =>(<li key={park.id}>{park.name}</li>))} */}
         <br />
         <br />
         <Footer />

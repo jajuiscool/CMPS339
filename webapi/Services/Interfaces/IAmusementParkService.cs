@@ -11,5 +11,6 @@ namespace webapi.Services.Interfaces
         Task<ParksGetDto?> InsertAsync(ParksCreateDto dto);
         
         Task<Parks?> GetParkAttractions(int id);
+        Task<Parks?> Edit(int id, string newName);
     }
 }
