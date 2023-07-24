@@ -22,12 +22,11 @@ export default function ParksById() {
         <Header />
 
         <div>
-        
+        {backendData.map(details =>(<li key={details.id}>{details.name}</li>))} 
+
         </div>
         <br />
         <br />
-         {backendData.map(park =>(<li key={park.id}>{park.name}</li>))} 
-         
         <br />
         <br />
         <Footer />
