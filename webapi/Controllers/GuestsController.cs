@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using webapi.Models;
 using webapi.Services.Implementations;
 using webapi.Services.Interfaces;

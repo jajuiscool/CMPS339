@@ -1,4 +1,4 @@
-﻿using Dapper;
+using Dapper;
 using System.Data;
 using System.Data.SqlClient;
 using webapi.Models;
