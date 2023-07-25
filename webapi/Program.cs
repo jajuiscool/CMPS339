@@ -16,6 +16,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddScoped<IAmusementParkService, AmusementParkService>();
 builder.Services.AddScoped<IAttractionsService, AttractionsService>();
+builder.Services.AddScoped<IUsersService, UserService>();
+builder.Services.AddScoped<IGuestsService, GuestsService>();
 
 var app = builder.Build();
 
