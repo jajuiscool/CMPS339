@@ -1,18 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using webapi.Models;
+using webapi.Services.Implementations;
 using webapi.Services.Interfaces;
 
 namespace webapi.Controllers
 {
-
     [ApiController]
     [Route("api/guests")]
     public class GuestsController : ControllerBase
     {
+        private readonly IGuestsService _guestsService;
 
-        private readonly IGuestService _guestsService;
-
-        public GuestsController(IGuestService guestsService)
+        public GuestsController(IGuestsService guestsService)
         {
             _guestsService = guestsService;
         }
@@ -24,25 +23,21 @@ namespace webapi.Controllers
             return Ok(guests);
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult> GetById(int id)
-        {
-            Guests? guest = await _guestsService.GetByIdAsync(id);
-            if (guest != null)
-            { 
-                return Ok(guest);
-            }
-            return NotFound();
-        }
-
         [HttpPost]
-        public async Task<ActionResult> Create(UsersCreateDto dto)
+        public async Task<ActionResult> Create(GuestsCreateDto dto)
         {
             if (ModelState.IsValid)
             {
-                UsersGetDto? user = await _guestsService.GetByIdAsync(dto);
-            }
-        }
 
+                GuestsGetDto? guest = await _guestsService.InsertAsync(dto);
+
+                if (guest != null)
+                {
+                    return Ok(guest);
+                }
+                return BadRequest("Unable to insert record.");
+            }
+            return BadRequest("The model is invalid");
+        }
     }
 }
