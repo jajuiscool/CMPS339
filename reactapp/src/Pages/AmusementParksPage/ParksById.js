@@ -5,7 +5,7 @@ import "./ParksPage.css";
 
 export default function ParksById() {
 
-    const[backendData,setBackendData] = useState([{}])
+    const[backendData,setBackendData] = useState([])
 
     useEffect(() =>{
         fetch("https://localhost:7085/api/amusement-parks/park-attractions?id=1").then(
@@ -22,7 +22,12 @@ export default function ParksById() {
         <Header />
 
         <div>
-        {backendData.map(details =>(<li key={details.id}>{details.name}</li>))} 
+        console.log(data.attractions)
+            
+            {backendData && backendData.attractions.map((x,y)=>{
+                return(<div key={y}>{x.name}</div>)
+            })}
+        {/* {backendData.map(details =>(<li key={details.id}>{details.name}</li>))}  */}
 
         </div>
         <br />

@@ -42,6 +42,14 @@ namespace webapi.Controllers
             return NotFound();
         }
 
+        [HttpGet("filter")]
+        public async Task<ActionResult> Filter(int filter)
+        {
+            List<AttractionDetails> attractions = await _attractionsService.FilterAsync(filter);
+
+            return Ok(attractions);
+        }
+
         [HttpPost]
         public async Task<ActionResult> Create(AttractionsCreateDto dto)
         {

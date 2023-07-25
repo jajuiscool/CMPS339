@@ -12,5 +12,6 @@ namespace webapi.Services.Interfaces
         Task<Attractions?> DeleteByIdAsync(int id);
 
         Task<List<AttractionDetails>> GetAllDetailsAsync();
+        Task<List<AttractionDetails>> FilterAsync(int filter);
     }
 }
