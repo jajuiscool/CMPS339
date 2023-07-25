@@ -28,7 +28,9 @@ export default function Parks() {
         <br />
         <br />
 
-         <Link to='/parks-by-id'>{backendData.map(park =>(<li key={park.id}>{park.name}</li>))}</Link>
+         <Link to='/parks-by-id'>
+            {backendData.map((park,index) =>
+                (<li key={index}>{park.name}</li>))}</Link>
 
         <br />
         <br />

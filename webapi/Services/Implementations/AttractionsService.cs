@@ -102,7 +102,23 @@ namespace webapi.Services.Implementations
             return attractions.FirstOrDefault();
         }
 
+        public async Task<List<AttractionDetails>> FilterAsync(int filter)
+        {
+            List<AttractionDetails> attractions = new();
 
+            using (IDbConnection connection = new SqlConnection(ConnectionService.ConnectionString))
+            {
+                connection.Open();
+                var param = new { Filter = filter };
+                var sql = "SELECT dets.*, att.* FROM AttractionDetails dets RIGHT JOIN Attractions att ON dets.AttractionId = att.Id WHERE dets.MinimumAge > @Filter";
 
+                var attractionsData = await connection.QueryAsync<AttractionDetails, Attractions, AttractionDetails>(sql,
+                    (x, y) => { x.Attraction = y; return x; },param);
+
+                attractions = attractionsData.ToList();
+            }
+
+            return attractions;
+        }
     }
 }

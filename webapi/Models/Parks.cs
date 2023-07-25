@@ -11,7 +11,7 @@ namespace webapi.Models
         [Required]
         [MaxLength(30)]
         public string Name { get; set; }
-        public Attractions Attractions { get; set; }
+        public Attractions? Attractions { get; set; }
 
 
     }
